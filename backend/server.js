@@ -77,6 +77,36 @@ app.post('/admin/delete-context', authenticateAdmin, (req, res) => {
   });
 });
 
+app.post('/api/start-game', async (req, res) => {
+  const { name, company, sector } = req.body;
+  // Aquí se podría inicializar la sesión del juego para el usuario
+  // Por ahora, simplemente generamos el primer dilema
+  const initialPrompt = `Eres el Director del Juego. El usuario ${name}, CEO de ${company} en el sector de ${sector}, ha iniciado la simulación. Presenta el primer dilema estratégico.`;
+  try {
+    const dilemma = await generateContent(initialPrompt);
+    res.json({ type: 'dilemma', dilemma: { text: dilemma, options: ['Opción 1', 'Opción 2', 'Opción 3'] } });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+app.post('/api/make-decision', async (req, res) => {
+  const { decision } = req.body;
+  // Aquí se procesaría la decisión y se generaría el siguiente dilema o el informe final
+  const nextPrompt = `El usuario ha elegido: ${decision}. Ahora, presenta el siguiente dilema o el informe final si la simulación ha terminado.`;
+  try {
+    const response = await generateContent(nextPrompt);
+    // Lógica para determinar si es un dilema o un informe
+    if (Math.random() > 0.7) { // Simulación: 30% de probabilidad de que sea el informe final
+      res.json({ type: 'report', report: response });
+    } else {
+      res.json({ type: 'dilemma', dilemma: { text: response, options: ['Opción A', 'Opción B', 'Opción C'] } });
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
 app.post('/api/capture-lead', (req, res) => {
   const { name, email, company, consent } = req.body;
 

@@ -15,27 +15,44 @@ function App() {
   const [currentDilemma, setCurrentDilemma] = useState<any>(null);
   const [reportContent, setReportContent] = useState<string>('');
 
-  const startGame = () => {
-    // Lógica para iniciar el juego y obtener el primer dilema
-    setCurrentDilemma({
-      text: 'Este es el primer dilema de prueba.',
-      options: ['Opción A', 'Opción B'],
-    });
-    setGameState('dilemma');
+  const startGame = async (name: string, company: string, sector: string) => {
+    try {
+      const response = await fetch('/api/start-game', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, company, sector }),
+      });
+      const data = await response.json();
+      setCurrentDilemma(data.dilemma);
+      setGameState('dilemma');
+    } catch (error) {
+      console.error('Error al iniciar el juego:', error);
+      alert('Error al iniciar el juego. Por favor, inténtalo de nuevo.');
+    }
   };
 
-  const handleOptionSelect = (option: string) => {
-    // Lógica para enviar la opción seleccionada al backend y obtener el siguiente dilema o el informe final
-    console.log('Opción seleccionada:', option);
-    // Simulación de avance
-    if (Math.random() > 0.5) {
-      setCurrentDilemma({
-        text: 'Este es el siguiente dilema.',
-        options: ['Opción X', 'Opción Y'],
+  const handleOptionSelect = async (option: string) => {
+    try {
+      const response = await fetch('/api/make-decision', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ decision: option }),
       });
-    } else {
-      setReportContent('Este es un informe de prueba generado por la simulación.');
-      setGameState('report');
+      const data = await response.json();
+
+      if (data.type === 'dilemma') {
+        setCurrentDilemma(data.dilemma);
+      } else if (data.type === 'report') {
+        setReportContent(data.report);
+        setGameState('report');
+      }
+    } catch (error) {
+      console.error('Error al tomar la decisión:', error);
+      alert('Error al tomar la decisión. Por favor, inténtalo de nuevo.');
     }
   };
 
