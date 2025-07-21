@@ -8,7 +8,7 @@ Crear una simulación web estratégica e interactiva que sirva como herramienta 
 ### Fase 1: Arquitectura y Diseño (Semana 1)
 - [x] 1.1. Inicializar el repositorio en Git y crear la estructura de carpetas del proyecto.
 - [x] 1.2. Configurar el proyecto de React (TypeScript) y Node.js (Express).
-- [ ] 1.3. Diseñar el "prompt" maestro para la IA Generativa, incluyendo instrucciones para:
+- [x] 1.3. Diseñar el "prompt" maestro para la IA Generativa, incluyendo instrucciones para:
     - Actuar como "Director del Juego".
     - Utilizar el contexto base (documentos iniciales).
     - Realizar búsquedas web en fuentes fiables cuando necesite información actual.
