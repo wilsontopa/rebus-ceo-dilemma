@@ -24,7 +24,7 @@ Crear una simulación web estratégica e interactiva que sirva como herramienta 
 - [x] 2.5. Realizar pruebas unitarias del backend y la lógica de la IA. (Fallo externo: API de Gemini sobrecargada)
 
 ### Fase 3: Desarrollo del Frontend (Semana 4)
-- [ ] 3.1. Construir los componentes de la interfaz en React: pantalla de inicio, pantalla de dilema, pantalla de informe.
+- [x] 3.1. Construir los componentes de la interfaz en React: pantalla de inicio, pantalla de dilema, pantalla de informe.
 - [ ] 3.2. Implementar la lógica del frontend para enviar decisiones y mostrar los dilemas y el informe final generados por la IA.
 - [ ] 3.3. Añadir animaciones sutiles y transiciones para una experiencia de usuario fluida y premium.
 - [ ] 3.4. Asegurar un diseño completamente responsivo para escritorio y móvil.
