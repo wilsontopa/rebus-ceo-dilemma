@@ -4,6 +4,8 @@
   color: #333;
   padding: 20px;
   transition: opacity 0.5s ease-in-out;
+  max-width: 800px; /* Limita el ancho máximo para pantallas grandes */
+  margin: 0 auto; /* Centra el contenido */
 }
 
 h1 {
@@ -19,6 +21,7 @@ button {
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 5px; /* Espacio entre botones */
 }
 
 button:hover {
@@ -28,4 +31,16 @@ button:hover {
 
 button:active {
   transform: translateY(0);
+}
+
+/* Media queries para responsividad */
+@media (max-width: 600px) {
+  .App {
+    padding: 10px;
+  }
+
+  button {
+    width: 100%; /* Botones de ancho completo en móviles */
+    margin-bottom: 10px;
+  }
 }
