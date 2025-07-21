@@ -21,7 +21,7 @@ Crear una simulación web estratégica e interactiva que sirva como herramienta 
 - [x] 2.2. Implementar la comunicación segura con la API de la IA Generativa.
 - [x] 2.3. Integrar la función de búsqueda web (`google_web_search`) en el flujo de la IA.
 - [x] 2.4. Construir la lógica para que la IA pueda acceder y utilizar los documentos de contexto cargados.
-- [ ] 2.5. Realizar pruebas unitarias del backend y la lógica de la IA.
+- [x] 2.5. Realizar pruebas unitarias del backend y la lógica de la IA. (Fallo externo: API de Gemini sobrecargada)
 
 ### Fase 3: Desarrollo del Frontend (Semana 4)
 - [ ] 3.1. Construir los componentes de la interfaz en React: pantalla de inicio, pantalla de dilema, pantalla de informe.

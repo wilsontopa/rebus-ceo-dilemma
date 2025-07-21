@@ -6,8 +6,8 @@ const path = require('path');
 const CONTEXT_DOCS_PATH = path.join(__dirname, '..', 'context_documents');
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
-const GEMINI_TOOL_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent'; // Usamos la misma URL para tool calls
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+const GEMINI_TOOL_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'; // Usamos la misma URL para tool calls
 
 const tools = [
   {
