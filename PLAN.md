@@ -19,7 +19,7 @@ Crear una simulación web estratégica e interactiva que sirva como herramienta 
 ### Fase 2: Desarrollo del Backend y Lógica Central (Semanas 2-3)
 - [x] 2.1. Desarrollar el servidor en Node.js para gestionar las sesiones de juego.
 - [x] 2.2. Implementar la comunicación segura con la API de la IA Generativa.
-- [ ] 2.3. Integrar la función de búsqueda web (`google_web_search`) en el flujo de la IA.
+- [x] 2.3. Integrar la función de búsqueda web (`google_web_search`) en el flujo de la IA.
 - [ ] 2.4. Construir la lógica para que la IA pueda acceder y utilizar los documentos de contexto cargados.
 - [ ] 2.5. Realizar pruebas unitarias del backend y la lógica de la IA.
 
