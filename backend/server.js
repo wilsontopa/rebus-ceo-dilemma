@@ -77,6 +77,23 @@ app.post('/admin/delete-context', authenticateAdmin, (req, res) => {
   });
 });
 
+app.post('/api/capture-lead', (req, res) => {
+  const { name, email, company, consent } = req.body;
+
+  if (!name || !email || !company || !consent) {
+    return res.status(400).send('Faltan datos o el consentimiento no fue otorgado.');
+  }
+
+  const leadData = `Nombre: ${name}, Email: ${email}, Empresa: ${company}, Consentimiento: ${consent}\n`;
+  fs.appendFile('leads.txt', leadData, (err) => {
+    if (err) {
+      console.error('Error al guardar el lead:', err);
+      return res.status(500).send('Error al guardar el lead.');
+    }
+    res.send('Lead capturado con éxito.');
+  });
+});
+
 app.listen(port, () => {
   console.log(`Servidor backend escuchando en http://localhost:${port}`);
 });
