@@ -3,9 +3,12 @@ import Home from './components/Home';
 import Dilemma from './components/Dilemma';
 import Report from './components/Report';
 import AdminPanel from './components/AdminPanel'; // Importar AdminPanel
+import PrivacyPolicy from './components/PrivacyPolicy';
+import TermsOfService from './components/TermsOfService';
+import Disclaimer from './components/Disclaimer';
 import './App.css';
 
-type GameState = 'home' | 'dilemma' | 'report' | 'admin'; // Añadir 'admin' al tipo
+type GameState = 'home' | 'dilemma' | 'report' | 'admin' | 'privacy' | 'terms' | 'disclaimer'; // Añadir 'admin' al tipo
 
 function App() {
   const [gameState, setGameState] = useState<GameState>('home');
@@ -48,6 +51,16 @@ function App() {
       )}
       {gameState === 'report' && <Report reportContent={reportContent} />}
       {gameState === 'admin' && <AdminPanel />}
+      {gameState === 'privacy' && <PrivacyPolicy />}
+      {gameState === 'terms' && <TermsOfService />}
+      {gameState === 'disclaimer' && <Disclaimer />}
+
+      <div style={{ marginTop: '20px', fontSize: '0.8em', color: '#666' }}>
+        <button onClick={() => setGameState('privacy')} style={{ background: 'none', color: '#007bff', border: 'none', padding: '0 5px', cursor: 'pointer' }}>Política de Privacidad</button> |
+        <button onClick={() => setGameState('terms')} style={{ background: 'none', color: '#007bff', border: 'none', padding: '0 5px', cursor: 'pointer' }}>Términos de Servicio</button> |
+        <button onClick={() => setGameState('disclaimer')} style={{ background: 'none', color: '#007bff', border: 'none', padding: '0 5px', cursor: 'pointer' }}>Descargo de Responsabilidad</button>
+      </div>
+
       <button onClick={() => setGameState('admin')} style={{ position: 'absolute', bottom: 10, right: 10 }}>Admin</button>
     </div>
   );
