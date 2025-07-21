@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Home from './components/Home';
 import Dilemma from './components/Dilemma';
 import Report from './components/Report';
+import AdminPanel from './components/AdminPanel'; // Importar AdminPanel
 import './App.css';
 
-type GameState = 'home' | 'dilemma' | 'report';
+type GameState = 'home' | 'dilemma' | 'report' | 'admin'; // Añadir 'admin' al tipo
 
 function App() {
   const [gameState, setGameState] = useState<GameState>('home');
@@ -46,6 +47,8 @@ function App() {
         />
       )}
       {gameState === 'report' && <Report reportContent={reportContent} />}
+      {gameState === 'admin' && <AdminPanel />}
+      <button onClick={() => setGameState('admin')} style={{ position: 'absolute', bottom: 10, right: 10 }}>Admin</button>
     </div>
   );
 }
