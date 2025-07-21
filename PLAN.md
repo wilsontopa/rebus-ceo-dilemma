@@ -30,7 +30,7 @@ Crear una simulación web estratégica e interactiva que sirva como herramienta 
 - [x] 3.4. Asegurar un diseño completamente responsivo para escritorio y móvil.
 
 ### Fase 4: Funcionalidades de Administración y Legales (Semana 5)
-- [x] 4.1. Desarrollar una interfaz de administración simple y protegida por contraseña para que los consultores de Rebus puedan cargar nuevos documentos de contexto.
+- [x] 4.1. Desarrollar una interfaz de administración simple y protegida por contraseña para que los consultores de Rebus puedan cargar nuevos documentos de contexto. (Login implementado)
 - [x] 4.2. Integrar las páginas o modales con la Política de Privacidad, Términos de Servicio y descargo de responsabilidad.
 - [x] 4.3. Implementar la lógica de captura de leads (nombre, email, empresa) con consentimiento explícito, sin anonimizar completamente los datos del usuario si este decide proporcionarlos.
 

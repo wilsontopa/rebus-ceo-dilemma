@@ -44,6 +44,15 @@ app.get('/', (req, res) => {
   res.send('Backend de El Dilema del CEO funcionando!');
 });
 
+app.post('/admin/login', (req, res) => {
+  const { username, password } = req.body;
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    res.status(200).send('Autenticación exitosa.');
+  } else {
+    res.status(401).send('Credenciales inválidas.');
+  }
+});
+
 // Ruta para cargar documentos de contexto
 app.post('/admin/upload-context', authenticateAdmin, upload.single('contextFile'), (req, res) => {
   if (!req.file) {

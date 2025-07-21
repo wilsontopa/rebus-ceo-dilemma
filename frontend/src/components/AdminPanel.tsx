@@ -8,8 +8,26 @@ const AdminPanel: React.FC = () => {
   const [contextFiles, setContextFiles] = useState<string[]>([]);
 
   const handleLogin = async () => {
-    // Lógica para autenticar al administrador
-    setMessage('Funcionalidad de login no implementada aún.');
+    try {
+      const response = await fetch('/admin/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        setMessage('Inicio de sesión exitoso.');
+        // Aquí podrías almacenar un token de sesión o cambiar el estado para mostrar las funcionalidades de admin
+      } else {
+        const errorText = await response.text();
+        setMessage(`Error de inicio de sesión: ${errorText}`);
+      }
+    } catch (error) {
+      setMessage('Error de conexión al servidor.');
+      console.error('Error de login:', error);
+    }
   };
 
   const handleFileUpload = async () => {
