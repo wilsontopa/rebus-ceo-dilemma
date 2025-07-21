@@ -26,7 +26,7 @@ Crear una simulación web estratégica e interactiva que sirva como herramienta 
 ### Fase 3: Desarrollo del Frontend (Semana 4)
 - [x] 3.1. Construir los componentes de la interfaz en React: pantalla de inicio, pantalla de dilema, pantalla de informe.
 - [x] 3.2. Desarrollar el backend en Node.js para la comunicación con la API de la IA. (Duplicado, completado en Fase 2)
-- [ ] 3.3. Añadir animaciones sutiles y transiciones para una experiencia de usuario fluida y premium.
+- [x] 3.3. Añadir animaciones sutiles y transiciones para una experiencia de usuario fluida y premium.
 - [ ] 3.4. Asegurar un diseño completamente responsivo para escritorio y móvil.
 
 ### Fase 4: Funcionalidades de Administración y Legales (Semana 5)
