@@ -35,7 +35,7 @@ Crear una simulación web estratégica e interactiva que sirva como herramienta 
 - [x] 4.3. Implementar la lógica de captura de leads (nombre, email, empresa) con consentimiento explícito, sin anonimizar completamente los datos del usuario si este decide proporcionarlos.
 
 ### Fase 5: Pruebas, Despliegue y Entrega (Semana 6)
-- [ ] 5.1. Realizar pruebas exhaustivas del flujo completo (juego, carga de documentos, búsquedas web).
+- [ ] 5.1. Realizar pruebas exhaustivas del flujo completo (juego, carga de documentos, búsquedas web). (En progreso: requiere pruebas manuales)
 - [ ] 5.2. Optimizar el rendimiento y la seguridad de la aplicación.
 - [ ] 5.3. Configurar el hosting y desplegar la aplicación en un servidor web.
 - [ ] 5.4. Realizar una demostración final y entregar el proyecto y su documentación.
