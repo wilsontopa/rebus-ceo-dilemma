@@ -12,7 +12,7 @@ Crear una simulación web estratégica e interactiva que sirva como herramienta 
     - Actuar como "Director del Juego".
     - Utilizar el contexto base (documentos iniciales).
     - Realizar búsquedas web en fuentes fiables cuando necesite información actual.
-- [ ] 1.4. Diseñar la arquitectura del backend para permitir la carga dinámica de documentos de contexto.
+- [x] 1.4. Diseñar la arquitectura del backend para permitir la carga dinámica de documentos de contexto.
 - [ ] 1.5. Crear los wireframes y el diseño visual de la interfaz (minimalista y profesional).
 - [ ] 1.6. Redactar los borradores de la Política de Privacidad, Términos de Servicio y el descargo de responsabilidad legal.
 
