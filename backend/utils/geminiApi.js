@@ -1,5 +1,9 @@
 require('dotenv').config();
 const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+
+const CONTEXT_DOCS_PATH = path.join(__dirname, '..', 'context_documents');
 
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
@@ -26,7 +30,7 @@ const tools = [
   },
 ];
 
-async function generateContent(prompt, history = []) {
+function loadContextDocuments() {  let context = '';  try {    const files = fs.readdirSync(CONTEXT_DOCS_PATH);    for (const file of files) {      const filePath = path.join(CONTEXT_DOCS_PATH, file);      if (fs.statSync(filePath).isFile() && (file.endsWith('.txt') || file.endsWith('.md'))) {        context += `\n--- ${file} ---\n`;        context += fs.readFileSync(filePath, 'utf8');        context += '\n';      }    }  } catch (error) {    console.warn('No se pudieron cargar los documentos de contexto o la carpeta no existe:', error.message);  }  return context;}async function generateContent(prompt, history = []) {  const context = loadContextDocuments();  const fullPrompt = context ? `Contexto adicional:\n${context}\n\n${prompt}` : prompt;
   try {
     let requestBody = {
       contents: [...history, { parts: [{ text: prompt }] }],
