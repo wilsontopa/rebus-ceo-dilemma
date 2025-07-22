@@ -20,7 +20,6 @@ const Home: React.FC<HomeProps> = ({ onStartGame }) => {
   return (
     <div>
       <h1>El Dilema del CEO</h1>
-      <img src="/rebus_logo.png" alt="Logo de Rebus" style={{ width: '150px', marginBottom: '20px' }} />
       <p>Pon a prueba tu visión estratégica.</p>
       <div>
         <input

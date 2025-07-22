@@ -82,10 +82,10 @@ function App() {
         alt="Logo Rebus"
         style={{
           position: 'absolute',
-          top: '10px',
-          right: '10px',
-          width: '50px', /* 5cm */
-          height: '50px', /* 5cm */
+          top: '20px',
+          right: '20px',
+          width: '100px', /* 10cm */
+          height: '100px', /* 10cm */
           zIndex: 1000, /* Asegura que esté por encima de otros elementos */
         }}
       />
@@ -115,9 +115,11 @@ function App() {
         alt="Imagen Institucional Rebus"
         style={{
           width: '100%',
-          height: '60px', /* Aproximadamente 6cm */
-          objectFit: 'cover', /* Para que la imagen cubra el área sin distorsionarse */
-          marginTop: '20px', /* Espacio entre el pie de página y la imagen */
+          height: 'auto', /* Altura automática para no recortar */
+          maxHeight: '70px', /* Máximo 7cm de alto */
+          objectFit: 'contain', /* Para que la imagen se vea completa */
+          marginTop: 'auto', /* Empuja la imagen al final */
+          display: 'block', /* Elimina espacio extra debajo de la imagen */
         }}
       />
     </div>
