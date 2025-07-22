@@ -116,7 +116,7 @@ function App() {
         style={{
           width: '100%',
           height: 'auto', /* Altura automática para no recortar */
-          maxHeight: '70px', /* Máximo 7cm de alto */
+          maxHeight: '140px', /* Máximo 14cm de alto (duplicado) */
           objectFit: 'contain', /* Para que la imagen se vea completa */
           marginTop: 'auto', /* Empuja la imagen al final */
           display: 'block', /* Elimina espacio extra debajo de la imagen */
