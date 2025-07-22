@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { marked } from 'marked'; // Importar la biblioteca marked
 
 interface ReportProps {
   reportContent: string;
@@ -11,6 +12,16 @@ const Report: React.FC<ReportProps> = ({ reportContent }) => {
   const [consent, setConsent] = useState(false);
   const [message, setMessage] = useState('');
 
+  const getHtmlContent = () => {
+    if (!reportContent) return { __html: '' };
+    // Configurar marked para que trate los saltos de línea como <br>
+    marked.setOptions({
+      breaks: true,
+    });
+    const html = marked(reportContent) as string;
+    return { __html: html };
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!consent) {
@@ -19,7 +30,7 @@ const Report: React.FC<ReportProps> = ({ reportContent }) => {
     }
 
     try {
-      const response = await fetch('/api/capture-lead', {
+      const response = await fetch('http://localhost:3000/api/capture-lead', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -46,7 +57,8 @@ const Report: React.FC<ReportProps> = ({ reportContent }) => {
   return (
     <div>
       <h1>Tu Informe de Futuro Estratégico</h1>
-      <div dangerouslySetInnerHTML={{ __html: reportContent }} />
+      {/* Renderizar el HTML convertido */}
+      <div dangerouslySetInnerHTML={getHtmlContent()} />
 
       <div style={{ marginTop: '40px', borderTop: '1px solid #eee', paddingTop: '20px' }}>
         <h2>¿Listo para diseñar tu futuro real?</h2>

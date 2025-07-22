@@ -33,7 +33,7 @@ const tools = [
 function loadContextDocuments() {  let context = '';  try {    const files = fs.readdirSync(CONTEXT_DOCS_PATH);    for (const file of files) {      const filePath = path.join(CONTEXT_DOCS_PATH, file);      if (fs.statSync(filePath).isFile() && (file.endsWith('.txt') || file.endsWith('.md'))) {        context += `\n--- ${file} ---\n`;        context += fs.readFileSync(filePath, 'utf8');        context += '\n';      }    }  } catch (error) {    console.warn('No se pudieron cargar los documentos de contexto o la carpeta no existe:', error.message);  }  return context;}async function generateContent(prompt, history = []) {  const context = loadContextDocuments();  const fullPrompt = context ? `Contexto adicional:\n${context}\n\n${prompt}` : prompt;
   try {
     let requestBody = {
-      contents: [...history, { parts: [{ text: prompt }] }],
+      contents: [...history, { role: 'user', parts: [{ text: prompt }] }],
       tools: tools,
     };
 

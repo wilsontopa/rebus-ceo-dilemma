@@ -1,0 +1,16 @@
+# Dependencias de Node.js
+node_modules/
+
+# Archivos de entorno
+.env
+.env.admin
+
+# Archivos de registro
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de leads (contiene datos de usuario)
+leads.txt
