@@ -103,7 +103,7 @@ const AdminPanel: React.FC = () => {
     if (isAuthenticated) {
       fetchContextFiles();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, fetchContextFiles]); // Añadir fetchContextFiles como dependencia
 
   const handleLogout = () => {
     setIsAuthenticated(false);
