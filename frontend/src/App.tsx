@@ -77,6 +77,18 @@ function App() {
 
   return (
     <div className="App">
+      <img
+        src="/Logo_Rebus.png"
+        alt="Logo Rebus"
+        style={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px',
+          width: '50px', /* 5cm */
+          height: '50px', /* 5cm */
+          zIndex: 1000, /* Asegura que esté por encima de otros elementos */
+        }}
+      />
       {gameState === 'home' && <Home onStartGame={startGame} />}
       {gameState === 'dilemma' && currentDilemma && (
         <Dilemma
@@ -98,6 +110,16 @@ function App() {
         <button onClick={() => setGameState('disclaimer')} style={{ background: 'none', color: '#007bff', border: 'none', padding: '0 5px', cursor: 'pointer' }}>Descargo de Responsabilidad</button> |
         <button onClick={() => setGameState('admin')} style={{ background: 'none', color: '#007bff', border: 'none', padding: '0 5px', cursor: 'pointer' }}>Admin</button>
       </div>
+      <img
+        src="/Rebus_pie.png"
+        alt="Imagen Institucional Rebus"
+        style={{
+          width: '100%',
+          height: '60px', /* Aproximadamente 6cm */
+          objectFit: 'cover', /* Para que la imagen cubra el área sin distorsionarse */
+          marginTop: '20px', /* Espacio entre el pie de página y la imagen */
+        }}
+      />
     </div>
   );
 }
