@@ -1,0 +1,45 @@
+ Instrucciones para Cambiar la Imagen del Pie de Página
+
+  La imagen del pie de página se encuentra en la carpeta frontend/public y se llama Rebus_pie.png.
+
+  1. Formato y Dimensiones Apropiadas:
+
+   * Formato: Utiliza formatos de imagen web comunes como `.png` o `.jpg`. El formato .png es ideal si tu imagen tiene transparencias.
+   * Ancho: La imagen siempre se ajustará al 100% del ancho de la pantalla debido al estilo width: '100%' que le hemos aplicado. No necesitas
+     preocuparte por el ancho de la imagen en píxeles, solo asegúrate de que tenga suficiente resolución para no verse pixelada en pantallas
+     grandes.
+   * Altura: Actualmente, la imagen tiene un maxHeight: '140px'. Esto significa que su altura máxima será de 140 píxeles.
+       * El estilo objectFit: 'contain' asegura que la imagen se vea completa dentro de ese espacio de 140px de alto, sin recortarse. Si la
+         imagen es más ancha que alta (como un banner), verás espacios vacíos a los lados si su relación de aspecto no coincide exactamente
+         con el contenedor.
+       * Recomendación de Relación de Aspecto: Para que la imagen se vea bien y ocupe el espacio de 140px de alto sin mucho espacio vacío, te
+         sugiero que la imagen que uses tenga una relación de aspecto similar a un banner horizontal. Por ejemplo, una imagen de 1000px de
+         ancho por 140px de alto (o múltiplos de esa relación, como 2000px x 280px) funcionaría muy bien.
+
+  2. Cómo Cambiar la Imagen:
+
+  Hay dos escenarios principales:
+
+   * Escenario A: La nueva imagen tiene el MISMO nombre de archivo (`Rebus_pie.png`)
+       1. Prepara tu nueva imagen: Asegúrate de que tu nueva imagen se llame Rebus_pie.png y esté en un formato adecuado (.png o .jpg).
+       2. Reemplaza el archivo: En tu explorador de archivos, ve a E:\Rebus_CEO_Dilemma\frontend\public. Simplemente reemplaza el archivo
+          `Rebus_pie.png` existente con tu nueva imagen.
+       3. Sube los cambios a GitHub:
+           * Abre tu terminal en la raíz del proyecto (E:\Rebus_CEO_Dilemma).
+           * Ejecuta: git add .
+           * Ejecuta: git commit -m "Update: Actualiza imagen de pie de página" (o un mensaje descriptivo).
+           * Ejecuta: git push
+       4. Netlify desplegará: Netlify detectará el cambio en el archivo y automáticamente iniciará una nueva compilación y despliegue.
+
+   * Escenario B: La nueva imagen tiene un NOMBRE DE ARCHIVO DIFERENTE (ej. `nuevo_pie.jpg`)
+       1. Prepara tu nueva imagen: Asegúrate de que tu nueva imagen tenga el nombre deseado (ej. nuevo_pie.jpg).
+       2. Copia el archivo: En tu explorador de archivos, ve a E:\Rebus_CEO_Dilemma\frontend\public y copia tu nueva imagen allí.
+       3. Actualiza el código: Necesitas que yo actualice la referencia en frontend/src/App.tsx. Me dirías: "Gemini, por favor, cambia la
+          imagen del pie de página a nuevo_pie.jpg". Yo usaría la herramienta replace para cambiar src="/Rebus_pie.png" a src="/nuevo_pie.jpg".
+       4. Sube los cambios a GitHub:
+           * Abre tu terminal en la raíz del proyecto (E:\Rebus_CEO_Dilemma).
+           * Ejecuta: git add .
+           * Ejecuta: git commit -m "Update: Cambia imagen de pie de página a nuevo_pie.jpg" (o un mensaje descriptivo).
+           * Ejecuta: git push
+       5. Netlify desplegará: Netlify detectará el cambio en el código y el nuevo archivo, y automáticamente iniciará una nueva compilación y
+          despliegue.
