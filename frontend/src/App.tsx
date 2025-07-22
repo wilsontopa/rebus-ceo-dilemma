@@ -88,10 +88,9 @@ function App() {
       <div style={{ marginTop: '20px', fontSize: '0.8em', color: '#666' }}>
         <button onClick={() => setGameState('privacy')} style={{ background: 'none', color: '#007bff', border: 'none', padding: '0 5px', cursor: 'pointer' }}>Política de Privacidad</button> |
         <button onClick={() => setGameState('terms')} style={{ background: 'none', color: '#007bff', border: 'none', padding: '0 5px', cursor: 'pointer' }}>Términos de Servicio</button> |
-        <button onClick={() => setGameState('disclaimer')} style={{ background: 'none', color: '#007bff', border: 'none', padding: '0 5px', cursor: 'pointer' }}>Descargo de Responsabilidad</button>
+        <button onClick={() => setGameState('disclaimer')} style={{ background: 'none', color: '#007bff', border: 'none', padding: '0 5px', cursor: 'pointer' }}>Descargo de Responsabilidad</button> |
+        <button onClick={() => setGameState('admin')} style={{ background: 'none', color: '#007bff', border: 'none', padding: '0 5px', cursor: 'pointer' }}>Admin</button>
       </div>
-
-      <button onClick={() => setGameState('admin')} style={{ position: 'absolute', bottom: 10, right: 10 }}>Admin</button>
     </div>
   );
 }

@@ -36,13 +36,28 @@ const Home: React.FC<HomeProps> = ({ onStartGame }) => {
           onChange={(e) => setCompany(e.target.value)}
           required
         />
-        <select value={sector} onChange={(e) => setSector(e.target.value)} required>
-          <option value="">Selecciona un Sector</option>
-          <option value="Tecnologia">Tecnología</option>
-          <option value="Manufactura">Manufactura</option>
-          <option value="Servicios Financieros">Servicios Financieros</option>
-          <option value="Retail">Retail</option>
-        </select>
+        <input
+          type="text"
+          placeholder="Sector de tu Empresa (ej. Tecnología, Retail)"
+          value={sector}
+          onChange={(e) => setSector(e.target.value)}
+          list="sector-suggestions"
+          required
+        />
+        <datalist id="sector-suggestions">
+          <option value="Tecnología"></option>
+          <option value="Servicios Financieros"></option>
+          <option value="Retail"></option>
+          <option value="Manufactura"></option>
+          <option value="Salud"></option>
+          <option value="Educación"></option>
+          <option value="Energía"></option>
+          <option value="Transporte"></option>
+          <option value="Alimentos y Bebidas"></option>
+          <option value="Bienes Raíces"></option>
+          <option value="Consultoría"></option>
+          <option value="Medios y Entretenimiento"></option>
+        </datalist>
       </div>
       <button onClick={handleStart}>Iniciar Simulación</button>
     </div>
