@@ -45,7 +45,7 @@ const AdminPanel: React.FC = () => {
     } catch (error) {
       setMessage('Error de conexión al servidor.');
     }
-  };
+  }, [username, password]); // Dependencias de useCallback
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
