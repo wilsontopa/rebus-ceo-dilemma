@@ -3,9 +3,10 @@ import { marked } from 'marked'; // Importar la biblioteca marked
 
 interface ReportProps {
   reportContent: string;
+  onStartNewGame: () => void; // Nueva prop para reiniciar el juego
 }
 
-const Report: React.FC<ReportProps> = ({ reportContent }) => {
+const Report: React.FC<ReportProps> = ({ reportContent, onStartNewGame }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [company, setCompany] = useState('');
