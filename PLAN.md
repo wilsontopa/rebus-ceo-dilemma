@@ -39,4 +39,6 @@ Crear una simulación web estratégica e interactiva que sirva como herramienta 
 - [x] 5.1.1. Depuración y refinamiento del flujo de juego, informe y panel de administración.
 - [x] 5.2. Optimizar el rendimiento y la seguridad de la aplicación.
 - [x] 5.3. Configurar el hosting y desplegar la aplicación en un servidor web.
+- [x] 5.3.1. Mejoras UX: Botón Admin y Campo Sector.
+- [x] 5.3.2. Mejora UX: Opción "Iniciar Nueva Simulación" al finalizar el juego.
 - [ ] 5.4. Realizar una demostración final y entregar el proyecto y su documentación.
