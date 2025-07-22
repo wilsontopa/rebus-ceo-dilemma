@@ -68,6 +68,13 @@ function App() {
     }
   };
 
+  const startNewGame = () => {
+    setSessionId(null);
+    setCurrentDilemma(null);
+    setReportContent('');
+    setGameState('home');
+  };
+
   return (
     <div className="App">
       {gameState === 'home' && <Home onStartGame={startGame} />}
@@ -79,7 +86,7 @@ function App() {
           isLoading={isLoading} // Pasar el estado de carga
         />
       )}
-      {gameState === 'report' && <Report reportContent={reportContent} />}
+      {gameState === 'report' && <Report reportContent={reportContent} onStartNewGame={startNewGame} />}
       {gameState === 'admin' && <AdminPanel />}
       {gameState === 'privacy' && <PrivacyPolicy />}
       {gameState === 'terms' && <TermsOfService />}

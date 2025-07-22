@@ -100,6 +100,10 @@ const Report: React.FC<ReportProps> = ({ reportContent }) => {
         </form>
         {message && <p style={{ color: message.startsWith('Error') ? 'red' : 'green' }}>{message}</p>}
       </div>
+
+      <button onClick={onStartNewGame} style={{ marginTop: '20px', padding: '10px 20px', fontSize: '1em', cursor: 'pointer' }}>
+        Iniciar Nueva Simulación
+      </button>
     </div>
   );
 };
