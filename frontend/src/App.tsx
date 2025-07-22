@@ -20,7 +20,7 @@ function App() {
   const startGame = async (name: string, company: string, sector: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/api/start-game', {
+      const response = await fetch('https://rebus-ceo-dilemma.onrender.com/api/start-game', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ function App() {
     }
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3000/api/make-decision', {
+      const response = await fetch('https://rebus-ceo-dilemma.onrender.com/api/make-decision', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

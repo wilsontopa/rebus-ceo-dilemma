@@ -30,7 +30,7 @@ const Report: React.FC<ReportProps> = ({ reportContent }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/capture-lead', {
+      const response = await fetch('https://rebus-ceo-dilemma.onrender.com/api/capture-lead', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

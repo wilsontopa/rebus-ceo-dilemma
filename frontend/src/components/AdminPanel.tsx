@@ -11,7 +11,7 @@ const AdminPanel: React.FC = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/admin/login', {
+      const response = await fetch('https://rebus-ceo-dilemma.onrender.com/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -31,7 +31,7 @@ const AdminPanel: React.FC = () => {
 
   const fetchContextFiles = async () => {
     try {
-      const response = await fetch('http://localhost:3000/admin/list-context', {
+      const response = await fetch('https://rebus-ceo-dilemma.onrender.com/admin/list-context', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }), // Enviar credenciales
@@ -65,7 +65,7 @@ const AdminPanel: React.FC = () => {
     formData.append('password', password);
 
     try {
-      const response = await fetch('http://localhost:3000/admin/upload-context', {
+      const response = await fetch('https://rebus-ceo-dilemma.onrender.com/admin/upload-context', {
         method: 'POST',
         body: formData, // No se necesita Content-Type, el navegador lo pone
       });
@@ -82,7 +82,7 @@ const AdminPanel: React.FC = () => {
 
   const handleDeleteFile = async (filename: string) => {
     try {
-      const response = await fetch('http://localhost:3000/admin/delete-context', {
+      const response = await fetch('https://rebus-ceo-dilemma.onrender.com/admin/delete-context', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, filename }),
