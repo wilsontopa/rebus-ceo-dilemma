@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 const AdminPanel: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -29,7 +29,7 @@ const AdminPanel: React.FC = () => {
     }
   };
 
-  const fetchContextFiles = async () => {
+  const fetchContextFiles = useCallback(async () => {
     try {
       const response = await fetch('https://rebus-ceo-dilemma.onrender.com/admin/list-context', {
         method: 'POST',
@@ -103,7 +103,7 @@ const AdminPanel: React.FC = () => {
     if (isAuthenticated) {
       fetchContextFiles();
     }
-  }, [isAuthenticated, fetchContextFiles]); // Añadir fetchContextFiles como dependencia
+  }, [isAuthenticated, fetchContextFiles]);
 
   const handleLogout = () => {
     setIsAuthenticated(false);
