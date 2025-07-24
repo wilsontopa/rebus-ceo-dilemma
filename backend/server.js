@@ -28,13 +28,9 @@ const extractTextFromFile = async (filePath) => {
   if (['.txt', '.md', '.csv'].includes(fileExtension)) {
     return await fsp.readFile(filePath, 'utf8');
   } else if (['.pdf', '.xlsx'].includes(fileExtension)) {
-    // Marcador de posición: La extracción de texto de PDF/XLSX requiere librerías adicionales.
-    // Por ahora, devolveremos un mensaje indicando que no se soporta.
-    console.warn(`Extracción de texto no soportada para archivos ${fileExtension}.`);
-    return `Contenido de ${path.basename(filePath)} (tipo ${fileExtension}) no pudo ser extraído para resumen.`;
+    throw new Error(`Extracción de texto no soportada para archivos ${fileExtension}. Por favor, sube archivos .txt, .md o .csv.`);
   } else {
-    console.warn(`Tipo de archivo no soportado para extracción de texto: ${fileExtension}`);
-    return `Contenido de ${path.basename(filePath)} (tipo ${fileExtension}) no pudo ser extraído para resumen.`;
+    throw new Error(`Tipo de archivo no soportado para extracción de texto: ${fileExtension}. Por favor, sube archivos .txt, .md o .csv.`);
   }
 };
 
@@ -220,7 +216,7 @@ app.post('/admin/login', (req, res) => {
 app.post('/admin/upload-context', adminAuth, upload.single('contextFile'), async (req, res) => {
   if (!req.file) return res.status(400).send('No se ha subido ningún archivo.');
 
-  const originalFilePath = path.join(CONTEXT_DOCS_PATH, req.file.originalname);
+  const originalFilePath = req.file.path; // Usar la ruta temporal de Multer
   const summaryFileName = `${req.file.originalname}.summary`;
   const summaryFilePath = path.join(CONTEXT_SUMMARIES_PATH, summaryFileName);
 
@@ -234,10 +230,17 @@ app.post('/admin/upload-context', adminAuth, upload.single('contextFile'), async
     // Guardar el resumen
     await fsp.writeFile(summaryFilePath, summary, 'utf8');
 
+    // Mover el archivo original a su destino final
+    await fsp.rename(originalFilePath, path.join(CONTEXT_DOCS_PATH, req.file.originalname));
+
     res.send(`Archivo ${req.file.originalname} cargado y resumido con éxito.`);
   } catch (error) {
     console.error('Error al procesar el archivo de contexto:', error);
-    res.status(500).send(`Error al procesar el archivo ${req.file.originalname}.`);
+    // Si hay un error, intentar limpiar el archivo temporal de Multer
+    if (fs.existsSync(originalFilePath)) {
+      await fsp.unlink(originalFilePath).catch(e => console.error('Error al eliminar archivo temporal:', e));
+    }
+    res.status(500).send(`Error al procesar el archivo ${req.file.originalname}: ${error.message}`);
   }
 });
 
