@@ -2,8 +2,8 @@
   command = "npm run build"
   publish = "build"
 
-[[redirects]]
-  from = "/api/*"
-  to = "https://rebus-ceo-dilemma.onrender.com/:splat"
-  status = 200
-  force = true
+[context.production.environment]
+  REACT_APP_API_URL = "https://rebus-ceo-dilemma.onrender.com"
+
+[context.deploy-preview.environment]
+  REACT_APP_API_URL = "https://rebus-ceo-dilemma.onrender.com"

@@ -20,7 +20,7 @@ interface ReportData {
   recommendations?: string[];
 }
 
-const API_URL = '';
+const API_URL = 'http://localhost:3000'; // Apuntar al backend local para pruebas
 
 function App() {
   const [gameState, setGameState] = useState<GameState>('home');
