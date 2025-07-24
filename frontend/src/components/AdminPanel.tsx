@@ -34,6 +34,8 @@ interface Lead {
 // Definición del tipo para los textos legales
 type LegalDoc = 'privacy_policy.txt' | 'terms_of_service.txt' | 'disclaimer.txt';
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
+
 const AdminPanel: React.FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -48,8 +50,6 @@ const AdminPanel: React.FC = () => {
   const [legalContent, setLegalContent] = useState('');
 
   const [message, setMessage] = useState({ text: '', type: '' });
-
-  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
 
   const showMessage = (text: string, type: 'success' | 'error') => {
     setMessage({ text, type });
