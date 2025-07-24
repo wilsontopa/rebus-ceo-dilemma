@@ -16,7 +16,7 @@ interface ReportProps {
   onStartNewGame: () => void;
 }
 
-const API_URL = 'http://localhost:3000'; // Apuntar al backend local
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
 
 // Función para construir el informe en Markdown de forma segura
 const buildMarkdownReport = (data: ReportData): string => {
