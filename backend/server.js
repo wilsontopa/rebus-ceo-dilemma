@@ -213,7 +213,7 @@ app.post('/admin/login', (req, res) => {
   }
 });
 
-app.post('/admin/upload-context', adminAuth, upload.single('contextFile'), async (req, res) => {
+app.post('/admin/upload-context', upload.single('contextFile'), adminAuth, async (req, res) => {
   if (!req.file) return res.status(400).send('No se ha subido ningún archivo.');
 
   const originalFilePath = req.file.path; // Usar la ruta temporal de Multer
