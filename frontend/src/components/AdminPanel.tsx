@@ -49,7 +49,7 @@ const AdminPanel: React.FC = () => {
 
   const [message, setMessage] = useState({ text: '', type: '' });
 
-  const API_URL = 'http://localhost:3000'; // URL del backend local
+  const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
 
   const showMessage = (text: string, type: 'success' | 'error') => {
     setMessage({ text, type });
