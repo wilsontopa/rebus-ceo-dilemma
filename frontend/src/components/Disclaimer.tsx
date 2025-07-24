@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const API_URL = 'http://localhost:3000'; // Usar la URL del backend local
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000';
 
 const Disclaimer: React.FC = () => {
   const [content, setContent] = useState('Cargando...');
