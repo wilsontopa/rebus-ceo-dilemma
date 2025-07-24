@@ -271,6 +271,6 @@ app.post('/admin/update-legal-text', adminAuth, async (req, res) => {
 });
 
 // --- Iniciar Servidor ---
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Servidor backend escuchando en http://0.0.0.0:${port}`);
+app.listen(port, () => {
+  console.log(`Servidor backend escuchando en http://localhost:${port}`);
 });
