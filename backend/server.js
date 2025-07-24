@@ -69,7 +69,7 @@ const initializeApp = async () => {
 initializeApp();
 
 // --- Middlewares ---
-app.use(cors({ origin: ['https://rebus-el-dilema-del-ceo.netlify.app', 'http://localhost:3001'] }));
+app.use(cors());
 app.use(express.json());
 app.use((req, res, next) => {
   console.log(`Received ${req.method} request to ${req.url}`);
@@ -86,8 +86,31 @@ const upload = multer({ storage: storage });
 app.get('/', (req, res) => res.send('Backend de El Dilema del CEO funcionando!'));
 
 app.post('/api/start-game', async (req, res) => {
-  console.log('DEBUG: Solicitud recibida en /api/start-game');
-  res.json({ sessionId: 'test-session-id', type: 'dilemma', dilemma: { dilemmaText: 'Dilema de prueba', options: ['Opción A', 'Opción B'] } });
+  const { name, company, sector } = req.body;
+  const sessionId = Date.now().toString();
+  gameSessions[sessionId] = { history: [], turn: 0, name, company, sector };
+
+  const context = await getCombinedContext();
+  const initialPromptText = `Eres el Director del Juego de una simulación estratégica llamada "El Dilema del CEO".\n${context}El usuario ${name}, CEO de ${company} en el sector de ${sector}, ha iniciado la simulación. Presenta el primer dilema estratégico. Tu respuesta DEBE ser un objeto JSON con EXACTAMENTE dos propiedades: 'dilemmaText' (string) y 'options' (array de strings).`;
+
+  try {
+    const rawResponse = await generateContent(initialPromptText);
+    const jsonStartIndex = rawResponse.indexOf('{');
+    const jsonEndIndex = rawResponse.lastIndexOf('}');
+    if (jsonStartIndex === -1 || jsonEndIndex === -1) throw new Error('La respuesta de la IA no contiene un JSON válido.');
+    
+    const jsonString = rawResponse.substring(jsonStartIndex, jsonEndIndex + 1);
+    const parsedResponse = JSON.parse(jsonString);
+
+    gameSessions[sessionId].history.push({ role: 'user', parts: [{ text: initialPromptText }] });
+    gameSessions[sessionId].history.push({ role: 'model', parts: [{ text: JSON.stringify(parsedResponse) }] });
+    gameSessions[sessionId].turn++;
+
+    res.json({ sessionId, type: 'dilemma', dilemma: parsedResponse });
+  } catch (error) {
+    console.error('Error al iniciar el juego con IA:', error);
+    res.status(500).json({ message: 'Error al iniciar el juego. Por favor, inténtalo de nuevo.' });
+  }
 });
 
 app.post('/api/make-decision', async (req, res) => {
