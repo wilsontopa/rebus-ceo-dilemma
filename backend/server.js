@@ -14,42 +14,67 @@ const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 const CONTEXT_DOCS_PATH = path.join(__dirname, 'context_documents');
+const CONTEXT_SUMMARIES_PATH = path.join(__dirname, 'context_summaries');
 const LEGAL_TEXTS_PATH = path.join(__dirname, 'legal_texts');
 const LEAD_FILE_PATH = path.join(__dirname, 'leads.txt');
 
 const gameSessions = {};
 
 // --- Funciones de Utilidad ---
-const getCombinedContext = async () => {
-  const allowedExtensions = ['.txt', '.md', '.csv'];
+
+// Función para extraer texto de diferentes tipos de archivo
+const extractTextFromFile = async (filePath) => {
+  const fileExtension = path.extname(filePath).toLowerCase();
+  if (['.txt', '.md', '.csv'].includes(fileExtension)) {
+    return await fsp.readFile(filePath, 'utf8');
+  } else if (['.pdf', '.xlsx'].includes(fileExtension)) {
+    // Marcador de posición: La extracción de texto de PDF/XLSX requiere librerías adicionales.
+    // Por ahora, devolveremos un mensaje indicando que no se soporta.
+    console.warn(`Extracción de texto no soportada para archivos ${fileExtension}.`);
+    return `Contenido de ${path.basename(filePath)} (tipo ${fileExtension}) no pudo ser extraído para resumen.`;
+  } else {
+    console.warn(`Tipo de archivo no soportado para extracción de texto: ${fileExtension}`);
+    return `Contenido de ${path.basename(filePath)} (tipo ${fileExtension}) no pudo ser extraído para resumen.`;
+  }
+};
+
+// Función para resumir texto usando la IA de Gemini
+const summarizeTextWithAI = async (text) => {
+  const prompt = `Por favor, resume el siguiente texto de manera concisa y relevante para un contexto de dilemas estratégicos empresariales. Enfócate en los puntos clave, estrategias, desafíos y oportunidades. El resumen debe ser de aproximadamente 100-200 palabras.\n\nTexto a resumir:\n"""\n${text}\n"""\n\nResumen:`;
   try {
-    const files = await fsp.readdir(CONTEXT_DOCS_PATH);
+    const rawResponse = await generateContent(prompt);
+    return rawResponse.trim();
+  } catch (error) {
+    console.error('Error al resumir texto con IA:', error);
+    return `Error al generar resumen para el texto.`;
+  }
+};
+
+const getCombinedContext = async () => {
+  try {
+    const files = await fsp.readdir(CONTEXT_SUMMARIES_PATH);
     let combinedContext = '';
     for (const file of files) {
-      const fileExtension = path.extname(file).toLowerCase();
-      if (allowedExtensions.includes(fileExtension)) {
-        try {
-          const content = await fsp.readFile(path.join(CONTEXT_DOCS_PATH, file), 'utf8');
-          combinedContext += `--- Contexto de ${file} ---\n${content}\n\n`;
-        } catch (readError) {
-          console.error(`Error al leer el archivo de texto ${file}:`, readError);
-        }
-      } else {
-        console.log(`Archivo omitido (no es un archivo de texto plano admitido): ${file}`);
+      try {
+        const content = await fsp.readFile(path.join(CONTEXT_SUMMARIES_PATH, file), 'utf8');
+        combinedContext += `--- Resumen de ${file.replace('.summary', '')} ---\n${content}\n\n`;
+      } catch (readError) {
+        console.error(`Error al leer el archivo de resumen ${file}:`, readError);
       }
     }
     return combinedContext;
   } catch (error) {
-    console.error('Error al leer el directorio de documentos de contexto:', error);
+    console.error('Error al leer el directorio de resúmenes de contexto:', error);
     return ''; // Devolver vacío si hay un error
   }
 };
 
 // --- Inicialización ---
 const initializeApp = async () => {
-  for (const dir of [CONTEXT_DOCS_PATH, LEGAL_TEXTS_PATH]) {
+  for (const dir of [CONTEXT_DOCS_PATH, LEGAL_TEXTS_PATH, CONTEXT_SUMMARIES_PATH]) {
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
   }
+
   try {
     await fsp.access(LEAD_FILE_PATH);
   } catch (error) {
@@ -192,9 +217,28 @@ app.post('/admin/login', (req, res) => {
   }
 });
 
-app.post('/admin/upload-context', adminAuth, upload.single('contextFile'), (req, res) => {
+app.post('/admin/upload-context', adminAuth, upload.single('contextFile'), async (req, res) => {
   if (!req.file) return res.status(400).send('No se ha subido ningún archivo.');
-  res.send(`Archivo ${req.file.originalname} cargado con éxito.`);
+
+  const originalFilePath = path.join(CONTEXT_DOCS_PATH, req.file.originalname);
+  const summaryFileName = `${req.file.originalname}.summary`;
+  const summaryFilePath = path.join(CONTEXT_SUMMARIES_PATH, summaryFileName);
+
+  try {
+    // Extraer texto del archivo original
+    const extractedText = await extractTextFromFile(originalFilePath);
+    
+    // Generar resumen con IA
+    const summary = await summarizeTextWithAI(extractedText);
+
+    // Guardar el resumen
+    await fsp.writeFile(summaryFilePath, summary, 'utf8');
+
+    res.send(`Archivo ${req.file.originalname} cargado y resumido con éxito.`);
+  } catch (error) {
+    console.error('Error al procesar el archivo de contexto:', error);
+    res.status(500).send(`Error al procesar el archivo ${req.file.originalname}.`);
+  }
 });
 
 app.post('/admin/list-context', adminAuth, async (req, res) => {
@@ -208,12 +252,21 @@ app.post('/admin/list-context', adminAuth, async (req, res) => {
 app.post('/admin/delete-context', adminAuth, async (req, res) => {
   const { filename } = req.body;
   if (!filename) return res.status(400).send('Nombre de archivo no proporcionado.');
-  const filePath = path.join(CONTEXT_DOCS_PATH, filename);
-  if (!filePath.startsWith(CONTEXT_DOCS_PATH)) return res.status(403).send('Acceso denegado.');
+  const originalFilePath = path.join(CONTEXT_DOCS_PATH, filename);
+  const summaryFilePath = path.join(CONTEXT_SUMMARIES_PATH, `${filename}.summary`);
+
   try {
-    await fsp.unlink(filePath);
-    res.send(`Archivo ${filename} eliminado con éxito.`);
+    // Eliminar el archivo original
+    if (fs.existsSync(originalFilePath)) {
+      await fsp.unlink(originalFilePath);
+    }
+    // Eliminar el archivo de resumen si existe
+    if (fs.existsSync(summaryFilePath)) {
+      await fsp.unlink(summaryFilePath);
+    }
+    res.send(`Archivo ${filename} y su resumen eliminados con éxito.`);
   } catch (err) {
+    console.error('Error al eliminar el archivo de contexto o su resumen:', err);
     res.status(500).send(`Error al eliminar el archivo.`);
   }
 });
