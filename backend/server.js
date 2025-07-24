@@ -19,8 +19,16 @@ const LEAD_FILE_PATH = path.join(__dirname, 'leads.txt');
 
 const gameSessions = {};
 
+// --- Caching for Combined Context ---
+let cachedContext = null; // Variable para almacenar el contexto combinado en caché
+
 // --- Funciones de Utilidad ---
 const getCombinedContext = async () => {
+  if (cachedContext) {
+    console.log('Contexto combinado recuperado de la caché.');
+    return cachedContext;
+  }
+
   const allowedExtensions = ['.txt', '.md', '.csv'];
   try {
     const files = await fsp.readdir(CONTEXT_DOCS_PATH);
@@ -38,6 +46,8 @@ const getCombinedContext = async () => {
         console.log(`Archivo omitido (no es un archivo de texto plano admitido): ${file}`);
       }
     }
+    cachedContext = combinedContext; // Almacenar en caché
+    console.log('Contexto combinado generado y almacenado en caché.');
     return combinedContext;
   } catch (error) {
     console.error('Error al leer el directorio de documentos de contexto:', error);
@@ -194,6 +204,7 @@ app.post('/admin/login', (req, res) => {
 
 app.post('/admin/upload-context', adminAuth, upload.single('contextFile'), (req, res) => {
   if (!req.file) return res.status(400).send('No se ha subido ningún archivo.');
+  cachedContext = null; // Invalidar la caché al subir un nuevo archivo
   res.send(`Archivo ${req.file.originalname} cargado con éxito.`);
 });
 
@@ -212,6 +223,7 @@ app.post('/admin/delete-context', adminAuth, async (req, res) => {
   if (!filePath.startsWith(CONTEXT_DOCS_PATH)) return res.status(403).send('Acceso denegado.');
   try {
     await fsp.unlink(filePath);
+    cachedContext = null; // Invalidar la caché al eliminar un archivo
     res.send(`Archivo ${filename} eliminado con éxito.`);
   } catch (err) {
     res.status(500).send(`Error al eliminar el archivo.`);

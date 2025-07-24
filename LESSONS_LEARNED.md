@@ -76,3 +76,41 @@ El consumo de la cuota gratuita de la API de Gemini causaba que la aplicación d
 ---
 
 Este documento servirá como una guía valiosa para futuros proyectos, ayudándonos a anticipar y evitar errores comunes, y a aplicar soluciones probadas.
+
+---
+
+## 4. Error 500 por Lectura de Archivos no Textuales en el Backend
+
+**Problema:**
+La aplicación sufría un `500 Internal Server Error` al iniciar una simulación si en la carpeta `context_documents` existían archivos no textuales como `.docx`, `.xlsx` o `.pdf`.
+
+**Diagnóstico:**
+El servidor intentaba leer todos los archivos de la carpeta de contexto como si fueran texto plano (`utf8`). Al encontrar un formato binario, el proceso de lectura fallaba y provocaba la caída del servidor.
+
+**Solución:**
+- **Backend (`server.js`):**
+    - Se implementó una **lógica de lectura selectiva**. Se definió una lista blanca de extensiones permitidas (`.txt`, `.md`, `.csv`).
+    - Antes de intentar leer un archivo, el servidor ahora comprueba su extensión. Si es una extensión permitida, lo lee y lo añade al contexto. Si no, lo ignora y muestra un mensaje en la consola del servidor.
+
+**Lección Aprendida:**
+- **Validar el tipo de archivo antes de procesarlo:** Nunca se debe asumir que los archivos subidos o presentes en una carpeta serán del tipo esperado. Siempre se debe validar la extensión o el tipo MIME antes de intentar una operación de lectura o procesamiento, especialmente en el backend, para evitar caídas del servidor.
+- **Construir sistemas tolerantes a fallos:** El backend debe ser lo suficientemente robusto como para ignorar archivos no válidos o inesperados sin que esto afecte a la funcionalidad principal de la aplicación.
+
+---
+
+## 5. Error de Compilación de TypeScript por `props` Faltantes
+
+**Problema:**
+La aplicación mostraba un error de compilación en el navegador (`TS2322: Type ... is not assignable to type ... Property 'isLoading' does not exist on type 'HomeProps'`) que impedía que se renderizara.
+
+**Diagnóstico:**
+El componente padre (`App.tsx`) pasaba una `prop` (`isLoading`) al componente hijo (`Home.tsx`), pero la interfaz de `props` del componente hijo no había sido actualizada para declarar que esperaba recibir dicha propiedad.
+
+**Solución:**
+- **Frontend (`Home.tsx`):**
+    - Se modificó la interfaz `HomeProps` para incluir `isLoading: boolean;`.
+    - Se utilizó la nueva `prop` para controlar el estado del botón de inicio (deshabilitarlo y cambiar el texto mientras se carga).
+
+**Lección Aprendida:**
+- **Sincronización de `props` entre componentes:** En TypeScript, es fundamental que la "firma" (las `props` que un componente espera recibir) y la "llamada" (las `props` que se le pasan) coincidan exactamente. Un desajuste, por pequeño que sea, detendrá la compilación.
+- **Los errores de TypeScript son una guía:** Aunque pueden parecer un obstáculo, los errores de TypeScript son una guía extremadamente útil que señala inconsistencias en el código antes de que se conviertan en errores de ejecución difíciles de depurar.

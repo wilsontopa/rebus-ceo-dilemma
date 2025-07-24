@@ -17,4 +17,8 @@ Si tuviera que destilar una sugerencia estratégica clave de esta experiencia pa
   Y, por supuesto, sigue alimentando tu GEMINI.md con estas lecciones. Será tu "memoria estratégica" para que cada nuevo proyecto sea más
   fluido y exitoso.
 
+  **Recomendación Adicional Post-Lanzamiento:**
+
+  "Implementa una validación de tipos de archivo temprana y estricta en el backend. Nunca asumas que los archivos en un directorio son del formato que esperas. Un backend robusto debe poder ignorar archivos inesperados sin caerse, garantizando la estabilidad de la aplicación."
+
   Ha sido un placer trabajar contigo. ¡Espero con entusiasmo nuestro próximo proyecto!

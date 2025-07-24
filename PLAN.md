@@ -41,4 +41,8 @@ Crear una simulación web estratégica e interactiva que sirva como herramienta 
 - [x] 5.3. Configurar el hosting y desplegar la aplicación en un servidor web.
 - [x] 5.3.1. Mejoras UX: Botón Admin y Campo Sector.
 - [x] 5.3.2. Mejora UX: Opción "Iniciar Nueva Simulación" al finalizar el juego.
-- [ ] 5.4. Realizar una demostración final y entregar el proyecto y su documentación.
+- [x] 5.4. Realizar una demostración final y entregar el proyecto y su documentación.
+
+### Fase 6: Post-Lanzamiento y Feedback (En Curso)
+- [ ] 6.1. Recopilar feedback de usuarios de confianza y stakeholders.
+- [ ] 6.2. Identificar y priorizar posibles mejoras o nuevas funcionalidades.
